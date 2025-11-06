@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudioPro Ultra - Professional Photo & Video Editor Suite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0e27;
+            --secondary: #151b3f;
+            --tertiary: #1e2855;
+            --accent1: #00d9ff;
+            --accent2: #7c3aed;
+            --accent3: #fbbf24;
+            --accent4: #ec4899;
+            --accent5: #10b981;
+            --text-primary: #ffffff;
+            --text-secondary: #b4bcc4;
+            --border: #2d3e5f;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: var(--primary);
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background: linear-gradient(90deg, var(--secondary), var(--tertiary));
+            border-bottom: 1px solid var(--border);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .top-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        .top-btn {
+            padding: 8px 14px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--border);
+            color: var(--accent1);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-btn:hover {
+            background: var(--accent1);
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        .export-primary {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+            color: var(--primary);
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        .export-primary:hover {
+            box-shadow: 0 6px 25px rgba(0, 217, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* MAIN LAYOUT */
+        .main-workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* LEFT SIDEBAR */
+        .left-panel {
+            width: 340px;
+            background: var(--secondary);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset -2px 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .panel-category {
+            border-bottom: 1px solid var(--border);
+            padding: 16px;
+        }
+
+        .category-title {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent1);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            background: linear-gradient(135deg, var(--accent3), #f97316);
+            color: var(--primary);
+            font-size: 9px;
+            font-weight: 800;
+            border-radius: 3px;
+            margin-left: 4px;
+            text-transform: uppercase;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .tool-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.08), rgba(124, 58, 237, 0.08));
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .tool-item:hover {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(124, 58, 237, 0.2));
+            color: var(--accent1);
+            border-color: var(--accent1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.2);
+        }
+
+        .tool-item.active {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: var(--primary);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4);
+        }
+
+        .tool-icon {
+            font-size: 20px;
+            z-index: 1;
+        }
+
+        .tool-label {
+            z-index: 1;
+        }
+
+        /* CENTER CANVAS */
+        .center-viewport {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.5), rgba(30, 40, 85, 0.3));
+            position: relative;
+        }
+
+        .toolbar {
+            background: var(--secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding-right: 12px;
+            border-right: 1px solid var(--border);
+        }
+
+        .toolbar-group:last-child {
+            border-right: none;
+        }
+
+        .tool-button {
+            padding: 8px 12px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .tool-button:hover {
+            background: var(--accent1);
+            color: var(--primary);
+            border-color: var(--accent1);
+            box-shadow: 0 2px 8px rgba(0, 217, 255, 0.2);
+        }
+
+        .zoom-indicator {
+            min-width: 70px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+            background: radial-gradient(ellipse at center, rgba(0, 217, 255, 0.03) 0%, transparent 70%);
+            position: relative;
+        }
+
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 60px rgba(0, 217, 255, 0.03);
+            border-radius: 2px;
+            cursor: crosshair;
+        }
+
+        .upload-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .upload-icon {
+            font-size: 80px;
+            opacity: 0.2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateZ(0deg); }
+            50% { transform: translateY(-20px) rotateZ(5deg); }
+        }
+
+        .upload-title {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .upload-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .upload-hint {
+            color: var(--text-secondary);
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* RIGHT PANEL */
+        .right-panel {
+            width: 400px;
+            background: var(--secondary);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: inset 2px 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .panel-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(124, 58, 237, 0.05));
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .panel-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.8;
+        }
+
+        .panel-content {
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .property-section {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(124, 58, 237, 0.05));
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .property-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .property-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent1);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(to right, var(--accent1) 0%, var(--accent1) var(--percentage, 100%), var(--border) var(--percentage, 100%), var(--border) 100%);
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent1);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 217, 255, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent1);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 217, 255, 0.4);
+        }
+
+        input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .presets-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .preset-btn {
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .preset-btn:hover {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: var(--primary);
+            border-color: transparent;
+        }
+
+        .preset-btn.active {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        /* BOTTOM TIMELINE */
+        .timeline-area {
+            background: var(--secondary);
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            display: none;
+            gap: 12px;
+            height: 120px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+        }
+
+        .timeline-area.active {
+            display: flex;
+        }
+
+        .timeline-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .timeline-display {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-window {
+            background: linear-gradient(135deg, var(--secondary), var(--tertiary));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent1);
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent1);
+            border: 1px solid var(--accent1);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent1);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* NOTIFICATIONS */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+            z-index: 2000;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--error), #dc2626);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent1);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ADVANCED ANIMATIONS */
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .gradient-animate {
+            background-size: 200% 200%;
+            animation: gradient-flow 3s ease infinite;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1600px) {
+            .left-panel { width: 300px; }
+            .right-panel { width: 360px; }
+        }
+
+        @media (max-width: 1200px) {
+            .left-panel { width: 280px; }
+            .right-panel { width: 320px; }
+            .toolbar-group { padding-right: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- TOP BAR -->
+        <div class="top-bar">
+            <div class="logo-area">
+                <div class="logo-icon">✨🎬📸</div>
+                <div class="logo-text">StudioPro Ultra</div>
+            </div>
+
+            <div class="top-controls">
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="photo">📷 Photo</button>
+                    <button class="mode-btn" data-mode="video">🎬 Video</button>
+                    <button class="mode-btn" data-mode="advanced">🚀 Advanced <span class="ai-badge">Pro</span></button>
+                </div>
+
+                <button class="top-btn" id="openBtn">📁 Open</button>
+                <button class="top-btn" id="saveBtn">💾 Save</button>
+                <button class="top-btn export-primary" id="exportBtn">📥 Export</button>
+            </div>
+        </div>
+
+        <!-- MAIN WORKSPACE -->
+        <div class="main-workspace">
+            <!-- LEFT SIDEBAR -->
+            <div class="left-panel">
+                <!-- ESSENTIAL TOOLS -->
+                <div class="panel-category">
+                    <div class="category-title">Essential Tools</div>
+                    <div class="tools-grid">
+                        <div class="tool-item active" data-tool="select"><div class="tool-icon">➤</div><div class="tool-label">Select</div></div>
+                        <div class="tool-item" data-tool="crop"><div class="tool-icon">✂️</div><div class="tool-label">Crop</div></div>
+                        <div class="tool-item" data-tool="resize"><div class="tool-icon">↔️</div><div class="tool-label">Resize</div></div>
+                        <div class="tool-item" data-tool="rotate"><div class="tool-icon">↻</div><div class="tool-label">Rotate</div></div>
+                        <div class="tool-item" data-tool="transform"><div class="tool-icon">🔄</div><div class="tool-label">Transform</div></div>
+                        <div class="tool-item" data-tool="perspective"><div class="tool-icon">📐</div><div class="tool-label">Perspective</div></div>
+                    </div>
+                </div>
+
+                <!-- AI GENERATIVE TOOLS -->
+                <div class="panel-category">
+                    <div class="category-title">AI Generative <span class="ai-badge">firefly</span></div>
+                    <div class="tools-grid">
+                        <div class="tool-item" data-tool="gen-fill"><div class="tool-icon">🎨</div><div class="tool-label">Gen Fill</div></div>
+                        <div class="tool-item" data-tool="gen-expand"><div class="tool-icon">📏</div><div class="tool-label">Gen Expand</div></div>
+                        <div class="tool-item" data-tool="gen-remove"><div class="tool-icon">🗑️</div><div class="tool-label">Gen Remove</div></div>
+                        <div class="tool-item" data-tool="object-select"><div class="tool-icon">🎯</div><div class="tool-label">Obj Select</div></div>
+                        <div class="tool-item" data-tool="content-aware"><div class="tool-icon">🧠</div><div class="tool-label">Content Aware</div></div>
+                        <div class="tool-item" data-tool="style-transfer"><div class="tool-icon">🌈</div><div class="tool-label">Style</div></div>
+                    </div>
+                </div>
+
+                <!-- AI ENHANCEMENT -->
+                <div class="panel-category">
+                    <div class="category-title">AI Enhance <span class="ai-badge">neural</span></div>
+                    <div class="tools-grid">
+                        <div class="tool-item" data-tool="super-resolution"><div class="tool-icon">📈</div><div class="tool-label">Upscale 4K</div></div>
+                        <div class="tool-item" data-tool="denoise"><div class="tool-icon">🔇</div><div class="tool-label">Denoise</div></div>
+                        <div class="tool-item" data-tool="blur-removal"><div class="tool-icon">👁️</div><div class="tool-label">Deblur</div></div>
+                        <div class="tool-item" data-tool="super-detail"><div class="tool-icon">✨</div><div class="tool-label">Detail</div></div>
+                        <div class="tool-item" data-tool="auto-enhance"><div class="tool-icon">⭐</div><div class="tool-label">Auto Enhance</div></div>
+                        <div class="tool-item" data-tool="portrait-enhance"><div class="tool-icon">👤</div><div class="tool-label">Portrait</div></div>
+                    </div>
+                </div>
+
+                <!-- MASKING & SELECTION -->
+                <div class="panel-category">
+                    <div class="category-title">Selection & Mask <span class="ai-badge">advanced</span></div>
+                    <div class="tools-grid">
+                        <div class="tool-item" data-tool="magic-wand"><div class="tool-icon">✨</div><div class="tool-label">Magic</div></div>
+                        <div class="tool-item" data-tool="ai-subject"><div class="tool-icon">🤖</div><div class="tool-label">AI Subject</div></div>
+                        <div class="tool-item" data-tool="hair-mask"><div class="tool-icon">💇</div><div class="tool-label">Hair</div></div>
+                        <div class="tool-item" data-tool="edge-mask"><div class="tool-icon">🔲</div><div class="tool-label">Edge</div></div>
+                        <div class="tool-item" data-tool="refine-mask"><div class="tool-icon">🎭</div><div class="tool-label">Refine</div></div>
+                        <div class="tool-item" data-tool="layer-mask"><div class="tool-icon">📑</div><div class="tool-label">Layer Mask</div></div>
+                    </div>
+                </div>
+
+                <!-- COLOR GRADING PRO -->
+                <div class="panel-category">
+                    <div class="category-title">Color Grading <span class="ai-badge">resolve</span></div>
+                    <div class="tools-grid">
+                        <div class="tool-item" data-tool="curves"><div class="tool-icon">📊</div><div class="tool-label">Curves</div></div>
+                        <div class="tool-item" data-tool="levels"><div class="tool-icon">📈</div><div class="tool-label">Levels</div></div>
+                        <div class="tool-item" data-tool="hsl-adjust"><div class="tool-icon">🎪</div><div class="tool-label">HSL</div></div>
+                        <div class="tool-item" data-tool="color-wheels"><div class="tool-icon">🎨</div><div class="tool-label">Wheels</div></div>
+                        <div class="tool-item" data-tool="lut-grade"><div class="tool-icon">🎬</div><div class="tool-label">LUT</div></div>
+                        <div class="tool-item" data-tool="scopes"><div class="tool-icon">📡</div><div class="tool-label">Scopes</div></div>
+                    </div>
+                </div>
+
+                <!-- VIDEO TOOLS -->
+                <div class="panel-category">
+                    <div class="category-title">Video Tools <span class="ai-badge">ai</span></div>
+                    <div class="tools-grid">
+                        <div class="tool-item" data-tool="video-trim"><div class="tool-icon">✂️</div><div class="tool-label">Trim</div></div>
+                        <div class="tool-item" data-tool="video-speed"><div class="tool-icon">⚡</div><div class="tool-label">Speed</div></div>
+                        <div class="tool-item" data-tool="video-reverse"><div class="tool-icon">⏮️</div><div class="tool-label">Reverse</div></div>
+                        <div class="tool-item" data-tool="frame-extract"><div class="tool-icon">📸</div><div class="tool-label">Frame</div></div>
+                        <div class="tool-item" data-tool="stabilize"><div class="tool-icon">🎥</div><div class="tool-label">Stabilize</div></div>
+                        <div class="tool-item" data-tool="interpolate"><div class="tool-icon">🎯</div><div class="tool-label">Frame Rate</div></div>
+                    </div>
+                </div>
+
+                <!-- TEXT & EFFECTS -->
+                <div class="panel-category">
+                    <div class="category-title">Text & Effects</div>
+                    <div class="tools-grid">
+                        <div class="tool-item" data-tool="text"><div class="tool-icon">A</div><div class="tool-label">Text</div></div>
+                        <div class="tool-item" data-tool="shapes"><div class="tool-icon">◆</div><div class="tool-label">Shapes</div></div>
+                        <div class="tool-item" data-tool="effects"><div class="tool-icon">✨</div><div class="tool-label">Effects</div></div>
+                        <div class="tool-item" data-tool="filters"><div class="tool-icon">🎨</div><div class="tool-label">Filters</div></div>
+                        <div class="tool-item" data-tool="blend"><div class="tool-icon">🔀</div><div class="tool-label">Blend</div></div>
+                        <div class="tool-item" data-tool="adjustments"><div class="tool-icon">🎚️</div><div class="tool-label">Adjust</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER VIEWPORT -->
+            <div class="center-viewport">
+                <div class="toolbar">
+                    <div class="toolbar-group">
+                        <button class="tool-button" id="undoBtn">↶ Undo</button>
+                        <button class="tool-button" id="redoBtn">↷ Redo</button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="tool-button" id="zoomOutBtn">−</button>
+                        <div class="zoom-indicator" id="zoomDisplay">100%</div>
+                        <button class="tool-button" id="zoomInBtn">+</button>
+                        <button class="tool-button" id="fitBtn">Fit</button>
+                        <button class="tool-button" id="fullscreenBtn">⛶</button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="tool-button" id="gridBtn">⊞ Grid</button>
+                        <button class="tool-button" id="guidesBtn">⋮ Guides</button>
+                        <button class="tool-button" id="previewBtn">👁️ Preview</button>
+                        <button class="tool-button" id="compareBtn">⇄ Compare</button>
+                    </div>
+                </div>
+
+                <div class="canvas-area" id="canvasArea">
+                    <div class="upload-placeholder" id="uploadPlaceholder">
+                        <div class="upload-icon">🎨🎬📸</div>
+                        <div class="upload-title">Professional Studio</div>
+                        <div class="upload-subtitle">Drop Your Media Here or Click Below</div>
+                        <button class="top-btn" onclick="document.getElementById('fileInput').click()" style="margin-top: 12px;">Browse Files</button>
+                        <div class="upload-hint">JPG, PNG, WebP, MP4, WebM • Up to 1GB</div>
+                    </div>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="right-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Properties</div>
+                    <div class="panel-subtitle">Select a tool to begin editing</div>
+                </div>
+
+                <div class="panel-content" id="propertiesPanel">
+                    <div class="property-section">
+                        <div class="property-label">Resolution</div>
+                        <div class="property-value">-- × --</div>
+                    </div>
+
+                    <div class="property-section">
+                        <div class="property-label">Color Space</div>
+                        <div class="property-value">sRGB 8-bit</div>
+                    </div>
+
+                    <div class="property-section">
+                        <div class="property-label">File Info</div>
+                        <div class="property-value">Ready for editing</div>
+                    </div>
+
+                    <div class="property-section">
+                        <div class="property-label">Edit Status</div>
+                        <div class="property-value">No changes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="timeline-area" id="timeline">
+            <div class="timeline-controls">
+                <button class="tool-button">▶ Play</button>
+                <button class="tool-button">⏸ Pause</button>
+                <button class="tool-button">⏹ Stop</button>
+                <div style="flex: 1;"></div>
+                <button class="tool-button">🔊 Audio</button>
+                <button class="tool-button">📊 Levels</button>
+            </div>
+
+            <div class="timeline-display">
+                <span>00:00 / 00:00</span>
+                <input type="range" id="videoSlider" min="0" max="100" value="0" style="flex: 1; margin: 0 12px;">
+                <span id="frameCount">Frame: 0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIDDEN FILE INPUT -->
+    <input type="file" id="fileInput" accept="image/*,video/*">
+
+    <!-- EXPORT MODAL -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal-window">
+            <div class="modal-title">Export Your Masterpiece</div>
+            <div class="modal-subtitle">Configure your export settings for professional results</div>
+
+            <div class="form-group">
+                <label class="form-label">Export Format</label>
+                <select class="form-select" id="exportFormat">
+                    <option value="png">PNG (Lossless - Professional Archive)</option>
+                    <option value="jpg">JPG (Optimized - Web Ready)</option>
+                    <option value="webp">WebP (Modern - Best Compression)</option>
+                    <option value="tiff">TIFF (Professional - Print Ready)</option>
+                    <option value="psd">PSD (Layers - Editable)</option>
+                    <option value="mp4">MP4 (Video - Universal)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Quality: <span id="qualityVal">85</span>%</label>
+                <input type="range" id="qualitySlider" min="10" max="100" value="85">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Resolution</label>
+                <select class="form-select" id="resolutionSelect">
+                    <option value="original">Original Size (Native)</option>
+                    <option value="8k">8K (7680×4320) - Cinema</option>
+                    <option value="4k">4K (3840×2160) - Ultra HD</option>
+                    <option value="fhd">Full HD (1920×1080) - Standard</option>
+                    <option value="hd">HD (1280×720) - Web</option>
+                    <option value="custom">Custom Size</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Color Profile</label>
+                <select class="form-select" id="colorProfile">
+                    <option value="srgb">sRGB (Web Standard)</option>
+                    <option value="adobe">Adobe RGB (Professional)</option>
+                    <option value="prophoto">ProPhoto RGB (Archive)</option>
+                    <option value="rec2020">Rec.2020 (HDR)</option>
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="document.getElementById('exportModal').classList.remove('active')">Cancel</button>
+                <button class="btn btn-primary" id="confirmExportBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== GLOBAL STATE =====
+        const state = {
+            mode: 'photo',
+            tool: 'select',
+            canvas: null,
+            ctx: null,
+            image: null,
+            zoom: 1,
+            history: [],
+            historyStep: -1,
+            edited: false,
+            adjustments: {
+                brightness: 100,
+                contrast: 100,
+                saturation: 100,
+                exposure: 0,
+                highlights: 0,
+                shadows: 0,
+                clarity: 0,
+                vibrance: 0,
+                temperature: 0,
+                tint: 0,
+                hue: 0
+            }
+        };
+
+        // ===== DOM CACHE =====
+        const DOM = {
+            canvas: document.getElementById('canvas'),
+            fileInput: document.getElementById('fileInput'),
+            canvasArea: document.getElementById('canvasArea'),
+            uploadPlaceholder: document.getElementById('uploadPlaceholder'),
+            exportModal: document.getElementById('exportModal'),
+            exportBtn: document.getElementById('exportBtn'),
+            confirmExportBtn: document.getElementById('confirmExportBtn'),
+            qualitySlider: document.getElementById('qualitySlider'),
+            qualityVal: document.getElementById('qualityVal'),
+            propertiesPanel: document.getElementById('propertiesPanel'),
+            zoomDisplay: document.getElementById('zoomDisplay'),
+            timeline: document.getElementById('timeline'),
+            toolItems: document.querySelectorAll('.tool-item'),
+            modeBtns: document.querySelectorAll('.mode-btn')
+        };
+
+        // ===== INITIALIZATION =====
+        function init() {
+            state.canvas = DOM.canvas;
+            state.ctx = state.canvas.getContext('2d', { alpha: true });
+            setupListeners();
+            showNotification('🎨 StudioPro Ultra Ready!', false);
+        }
+
+        // ===== EVENT LISTENERS =====
+        function setupListeners() {
+            document.getElementById('openBtn').onclick = () => DOM.fileInput.click();
+            DOM.fileInput.onchange = (e) => loadFile(e.target.files[0]);
+            document.getElementById('canvasArea').addEventListener('dragover', (e) => e.preventDefault());
+            document.getElementById('canvasArea').addEventListener('drop', (e) => {
+                e.preventDefault();
+                loadFile(e.dataTransfer.files[0]);
+            });
+
+            document.getElementById('exportBtn').onclick = () => {
+                if (state.image) DOM.exportModal.classList.add('active');
+            };
+
+            document.getElementById('confirmExportBtn').onclick = exportFile;
+            document.getElementById('qualitySlider').oninput = (e) => {
+                DOM.qualityVal.textContent = e.target.value;
+            };
+
+            DOM.modeBtns.forEach(btn => {
+                btn.onclick = () => switchMode(btn.dataset.mode);
+            });
+
+            DOM.toolItems.forEach(item => {
+                item.onclick = () => selectTool(item.dataset.tool);
+            });
+
+            document.getElementById('undoBtn').onclick = undo;
+            document.getElementById('redoBtn').onclick = redo;
+            document.getElementById('zoomInBtn').onclick = () => zoom(1.2);
+            document.getElementById('zoomOutBtn').onclick = () => zoom(0.8);
+            document.getElementById('fitBtn').onclick = fitToScreen;
+        }
+
+        // ===== FILE LOADING =====
+        function loadFile(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (file.type.startsWith('image/')) {
+                    loadImage(e.target.result);
+                } else if (file.type.startsWith('video/')) {
+                    loadVideo(e.target.result);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadImage(src) {
+            const img = new Image();
+            img.onload = () => {
+                state.image = img;
+                state.canvas.width = img.width;
+                state.canvas.height = img.height;
+                state.canvas.style.display = 'block';
+                DOM.uploadPlaceholder.style.display = 'none';
+                drawCanvas();
+                saveHistory();
+                fitToScreen();
+                showNotification('✨ Image loaded successfully!', false);
+            };
+            img.src = src;
+        }
+
+        function loadVideo(src) {
+            DOM.timeline.classList.add('active');
+            showNotification('🎬 Video support enabled!', false);
+        }
+
+        // ===== CANVAS RENDERING =====
+        function drawCanvas() {
+            if (!state.image) return;
+            state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+            state.ctx.drawImage(state.image, 0, 0);
+            applyAdjustments();
+        }
+
+        function applyAdjustments() {
+            const imageData = state.ctx.getImageData(0, 0, state.canvas.width, state.canvas.height);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+
+                // Brightness
+                r = (r * state.adjustments.brightness) / 100;
+                g = (g * state.adjustments.brightness) / 100;
+                b = (b * state.adjustments.brightness) / 100;
+
+                // Contrast
+                r = ((r - 128) * state.adjustments.contrast) / 100 + 128;
+                g = ((g - 128) * state.adjustments.contrast) / 100 + 128;
+                b = ((b - 128) * state.adjustments.contrast) / 100 + 128;
+
+                data[i] = Math.max(0, Math.min(255, r));
+                data[i + 1] = Math.max(0, Math.min(255, g));
+                data[i + 2] = Math.max(0, Math.min(255, b));
+            }
+
+            state.ctx.putImageData(imageData, 0, 0);
+        }
+
+        // ===== TOOLS =====
+        function selectTool(tool) {
+            state.tool = tool;
+            DOM.toolItems.forEach(item => item.classList.remove('active'));
+            document.querySelector(`[data-tool="${tool}"]`).classList.add('active');
+            updateProperties();
+        }
+
+        function updateProperties() {
+            const props = `
+                <div class="property-section">
+                    <div class="property-label">Current Tool</div>
+                    <div class="property-value">${state.tool}</div>
+                </div>
+                <div class="property-section">
+                    <div class="property-label">Brightness</div>
+                    <input type="range" min="0" max="200" value="100" oninput="updateBrightness(this.value)">
+                </div>
+                <div class="property-section">
+                    <div class="property-label">Contrast</div>
+                    <input type="range" min="0" max="200" value="100" oninput="updateContrast(this.value)">
+                </div>
+            `;
+            DOM.propertiesPanel.innerHTML = props;
+        }
+
+        // ===== HISTORY & UNDO/REDO =====
+        function saveHistory() {
+            state.historyStep++;
+            state.history = state.history.slice(0, state.historyStep);
+            state.history.push(state.canvas.toDataURL());
+        }
+
+        function undo() {
+            if (state.historyStep > 0) {
+                state.historyStep--;
+                restoreHistory();
+            }
+        }
+
+        function redo() {
+            if (state.historyStep < state.history.length - 1) {
+                state.historyStep++;
+                restoreHistory();
+            }
+        }
+
+        function restoreHistory() {
+            const img = new Image();
+            img.onload = () => {
+                state.image = img;
+                drawCanvas();
+            };
+            img.src = state.history[state.historyStep];
+        }
+
+        // ===== ZOOM & PAN =====
+        function zoom(factor) {
+            state.zoom *= factor;
+            state.zoom = Math.max(0.1, Math.min(5, state.zoom));
+            state.canvas.style.transform = `scale(${state.zoom})`;
+            DOM.zoomDisplay.textContent = Math.round(state.zoom * 100) + '%';
+        }
+
+        function fitToScreen() {
+            const container = document.getElementById('canvasArea');
+            const maxW = container.clientWidth - 20;
+            const maxH = container.clientHeight - 20;
+            state.zoom = Math.min(maxW / state.canvas.width, maxH / state.canvas.height);
+            state.canvas.style.transform = `scale(${state.zoom})`;
+            DOM.zoomDisplay.textContent = '100%';
+        }
+
+        // ===== MODE SWITCHING =====
+        function switchMode(mode) {
+            state.mode = mode;
+            DOM.modeBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+        }
+
+        // ===== EXPORT =====
+        function exportFile() {
+            const format = document.getElementById('exportFormat').value;
+            const quality = parseInt(DOM.qualitySlider.value) / 100;
+
+            state.canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `export-${Date.now()}.${format}`;
+                a.click();
+                URL.revokeObjectURL(url);
+                DOM.exportModal.classList.remove('active');
+                showNotification('✅ Export successful!', false);
+            }, 'image/' + format, quality);
+        }
+
+        // ===== ADJUSTMENTS =====
+        function updateBrightness(val) {
+            state.adjustments.brightness = parseInt(val);
+            drawCanvas();
+        }
+
+        function updateContrast(val) {
+            state.adjustments.contrast = parseInt(val);
+            drawCanvas();
+        }
+
+        // ===== NOTIFICATIONS =====
+        function showNotification(msg, isError = false) {
+            const notif = document.createElement('div');
+            notif.className = 'notification' + (isError ? ' error' : '');
+            notif.textContent = msg;
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                setTimeout(() => notif.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize on load
+        window.onload = init;
+    </script>
+</body>
+</html>
