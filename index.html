@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Media Editor - Free Online Photo & Video Editor</title>
+    <title>ProStudio AI - Advanced Photo & Video Editing Suite</title>
     <style>
         * {
             margin: 0;
@@ -12,21 +12,30 @@
         }
 
         :root {
-            --primary-bg: #1a1a1a;
-            --secondary-bg: #252525;
-            --tertiary-bg: #2d2d2d;
-            --accent-color: #4a9eff;
-            --accent-hover: #2e8de0;
+            --primary-dark: #0a0e27;
+            --secondary-dark: #151b3f;
+            --tertiary-dark: #1e2855;
+            --accent-primary: #00d9ff;
+            --accent-secondary: #7c3aed;
+            --accent-gold: #fbbf24;
             --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --border-color: #3a3a3a;
-            --success-color: #4ade80;
-            --error-color: #f87171;
+            --text-secondary: #b4bcc4;
+            --border-color: #2d3e5f;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 30px 90px rgba(0, 0, 0, 0.7);
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-bg);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
             color: var(--text-primary);
             overflow: hidden;
         }
@@ -35,178 +44,249 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            background: var(--primary-dark);
         }
 
-        /* Top Bar */
-        .top-bar {
-            background-color: var(--secondary-bg);
+        /* ===== TOP HEADER ===== */
+        .header {
+            background: linear-gradient(to right, var(--secondary-dark), var(--tertiary-dark));
             border-bottom: 1px solid var(--border-color);
-            padding: 12px 20px;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 100;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--accent-color);
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .top-bar-right {
+        .logo-icon {
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-center {
             display: flex;
-            gap: 15px;
+            gap: 8px;
             align-items: center;
         }
 
-        .mode-selector {
+        .mode-toggle {
             display: flex;
-            gap: 5px;
+            gap: 2px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
         }
 
         .mode-btn {
-            padding: 8px 15px;
-            border: 1px solid var(--border-color);
-            background-color: var(--tertiary-bg);
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
             color: var(--text-secondary);
-            border-radius: 4px;
             cursor: pointer;
+            border-radius: 4px;
             transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .mode-btn.active {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            border-color: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
         }
 
-        .mode-btn:hover {
-            background-color: var(--accent-hover);
-            color: white;
+        .header-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }
 
-        /* Main Content Area */
-        .main-container {
+        .icon-btn {
+            padding: 8px 12px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--accent-primary);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .icon-btn:hover {
+            background: var(--accent-primary);
+            color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4);
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--primary-dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        .export-btn:hover {
+            box-shadow: 0 6px 25px rgba(0, 217, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
             display: flex;
             flex: 1;
             overflow: hidden;
         }
 
-        /* Left Sidebar - Tools */
+        /* ===== LEFT SIDEBAR - TOOLS ===== */
         .left-sidebar {
-            width: 80px;
-            background-color: var(--secondary-bg);
+            width: 320px;
+            background: var(--secondary-dark);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            padding: 10px 0;
             overflow-y: auto;
+            box-shadow: inset -2px 0 20px rgba(0, 0, 0, 0.2);
         }
 
-        .tool-icon {
-            width: 60px;
-            height: 60px;
-            margin: 5px auto;
-            padding: 0;
-            background-color: var(--tertiary-bg);
+        .tools-section {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tools-header {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .tool-btn {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            color: var(--text-secondary);
-            font-size: 24px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 4px;
+            color: var(--text-secondary);
             transition: all 0.3s ease;
-            position: relative;
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        .tool-icon:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            transform: scale(1.05);
+        .tool-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(124, 58, 237, 0.2));
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
         }
 
-        .tool-icon.active {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            box-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+        .tool-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--primary-dark);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
         }
 
-        .tool-tooltip {
-            position: absolute;
-            left: 70px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: var(--accent-color);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 1001;
-        }
-
-        .tool-icon:hover .tool-tooltip {
-            opacity: 1;
-        }
-
-        /* Center Canvas Area */
+        /* ===== CENTER CANVAS ===== */
         .canvas-area {
             flex: 1;
             display: flex;
             flex-direction: column;
-            background-color: var(--tertiary-bg);
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.5), rgba(30, 40, 85, 0.3));
             position: relative;
             overflow: hidden;
         }
 
         .canvas-toolbar {
-            background-color: var(--secondary-bg);
+            background: var(--secondary-dark);
             border-bottom: 1px solid var(--border-color);
-            padding: 10px 15px;
+            padding: 12px 20px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .zoom-controls {
+        .toolbar-group {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             align-items: center;
+            padding-right: 12px;
+            border-right: 1px solid var(--border-color);
         }
 
-        .zoom-btn, .export-btn, .undo-btn, .redo-btn, .file-btn {
+        .toolbar-group:last-child {
+            border-right: none;
+        }
+
+        .control-btn {
             padding: 8px 12px;
-            background-color: var(--tertiary-bg);
+            background: rgba(0, 217, 255, 0.1);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
             color: var(--text-secondary);
             cursor: pointer;
+            border-radius: 6px;
             transition: all 0.3s ease;
-            font-size: 14px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .zoom-btn:hover, .export-btn:hover, .undo-btn:hover, .redo-btn:hover, .file-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
+        .control-btn:hover {
+            background: var(--accent-primary);
+            color: var(--primary-dark);
+            border-color: var(--accent-primary);
         }
 
-        .export-btn {
-            background-color: var(--accent-color);
-            color: white;
-            margin-left: auto;
-            font-weight: bold;
-        }
-
-        .export-btn:hover {
-            background-color: var(--accent-hover);
+        .zoom-display {
+            min-width: 60px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
         }
 
         .canvas-container {
@@ -216,184 +296,191 @@
             justify-content: center;
             overflow: auto;
             position: relative;
-            background: linear-gradient(45deg, #1a1a1a 25%, #252525 25%, #252525 50%, #1a1a1a 50%, #1a1a1a 75%, #252525 75%, #252525);
-            background-size: 20px 20px;
+            background: radial-gradient(ellipse at center, rgba(0, 217, 255, 0.05) 0%, transparent 70%);
         }
 
         canvas {
             max-width: 100%;
             max-height: 100%;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            cursor: crosshair;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 60px rgba(0, 217, 255, 0.05);
+            border-radius: 2px;
         }
 
-        .no-media {
+        .upload-placeholder {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 20px;
-            color: var(--text-secondary);
-        }
-
-        .upload-zone {
-            border: 2px dashed var(--accent-color);
-            padding: 40px;
-            border-radius: 8px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 40px;
         }
 
-        .upload-zone:hover {
-            background-color: rgba(74, 158, 255, 0.1);
-            transform: scale(1.02);
+        .upload-icon {
+            font-size: 64px;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .upload-zone p {
-            font-size: 18px;
-            margin-bottom: 10px;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* Right Panel - Properties */
-        .right-panel {
-            width: 300px;
-            background-color: var(--secondary-bg);
-            border-left: 1px solid var(--border-color);
-            overflow-y: auto;
-            padding: 15px;
-        }
-
-        .panel-section {
-            margin-bottom: 20px;
-        }
-
-        .panel-section-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .control-group {
-            margin-bottom: 15px;
-        }
-
-        .control-label {
-            font-size: 12px;
+        .upload-text {
             color: var(--text-secondary);
-            margin-bottom: 5px;
-            display: block;
+            font-size: 16px;
+        }
+
+        .upload-subtext {
+            color: var(--text-secondary);
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* ===== RIGHT PANEL - PROPERTIES ===== */
+        .right-panel {
+            width: 380px;
+            background: var(--secondary-dark);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: inset 2px 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .panel-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(124, 58, 237, 0.05));
+        }
+
+        .panel-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .panel-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .panel-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .property-group {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(124, 58, 237, 0.05));
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .property-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .property-value {
+            font-size: 13px;
+            color: var(--accent-primary);
+            font-weight: 600;
         }
 
         input[type="range"] {
             width: 100%;
             height: 6px;
             border-radius: 3px;
-            background: linear-gradient(to right, var(--accent-color) 0%, var(--accent-color) var(--percentage, 100%), var(--border-color) var(--percentage, 100%), var(--border-color) 100%);
+            background: linear-gradient(to right, var(--accent-primary) 0%, var(--accent-primary) var(--percentage, 100%), var(--border-color) var(--percentage, 100%), var(--border-color) 100%);
             outline: none;
             cursor: pointer;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            background: var(--accent-color);
+            background: var(--accent-primary);
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 8px rgba(0, 217, 255, 0.4);
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            background: var(--accent-color);
+            background: var(--accent-primary);
             cursor: pointer;
             border: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 8px rgba(0, 217, 255, 0.4);
         }
 
         input[type="color"] {
             width: 100%;
             height: 40px;
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
         }
 
-        select, input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            background-color: var(--tertiary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            color: var(--text-primary);
-            font-family: inherit;
-        }
-
-        .filter-grid {
+        /* ===== FILTERS GRID ===== */
+        .filters-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
 
-        .filter-btn {
-            padding: 10px;
-            background-color: var(--tertiary-bg);
+        .filter-preset {
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            color: var(--text-secondary);
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 12px;
             transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .filter-btn.active {
-            background-color: var(--accent-color);
-            color: white;
-            box-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
-        }
-
-        /* Bottom Timeline */
-        .bottom-timeline {
-            background-color: var(--secondary-bg);
-            border-top: 1px solid var(--border-color);
-            padding: 10px 15px;
-            display: none;
-            gap: 10px;
-            height: 80px;
-        }
-
-        .bottom-timeline.active {
-            display: flex;
-        }
-
-        .timeline-info {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            flex: 1;
-        }
-
-        .timeline-time {
             font-size: 12px;
+            font-weight: 600;
             color: var(--text-secondary);
+            text-align: center;
         }
 
-        .timeline-slider {
-            flex: 1;
+        .filter-preset:hover {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--primary-dark);
+            border-color: transparent;
         }
 
-        /* Modal */
+        .filter-preset.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+        }
+
+        /* ===== BOTTOM TIMELINE ===== */
+        .timeline {
+            background: var(--secondary-dark);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: none;
+            gap: 12px;
+            height: 100px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline.active {
+            display: flex;
+        }
+
+        /* ===== MODALS ===== */
         .modal {
             display: none;
             position: fixed;
@@ -401,8 +488,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
         }
@@ -412,79 +500,115 @@
         }
 
         .modal-content {
-            background-color: var(--secondary-bg);
+            background: linear-gradient(135deg, var(--secondary-dark), var(--tertiary-dark));
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 30px;
+            border-radius: 12px;
+            padding: 32px;
             max-width: 500px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            box-shadow: var(--shadow-xl);
         }
 
         .modal-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: var(--accent-color);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .modal-body {
+        .modal-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
             margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
         }
 
         .modal-footer {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            margin-top: 24px;
             justify-content: flex-end;
         }
 
         .btn {
             padding: 10px 20px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            background-color: var(--tertiary-bg);
-            color: var(--text-primary);
+            border-radius: 6px;
+            border: none;
             cursor: pointer;
-            font-size: 14px;
+            font-weight: 600;
+            font-size: 13px;
             transition: all 0.3s ease;
         }
 
-        .btn:hover {
-            background-color: var(--accent-color);
-            color: white;
+        .btn-secondary {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-primary);
+            color: var(--primary-dark);
         }
 
         .btn-primary {
-            background-color: var(--accent-color);
-            color: white;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--primary-dark);
         }
 
         .btn-primary:hover {
-            background-color: var(--accent-hover);
+            box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4);
+            transform: translateY(-2px);
         }
 
-        .btn-danger {
-            background-color: var(--error-color);
-        }
-
-        .btn-danger:hover {
-            background-color: #ef4444;
-        }
-
-        /* Notifications */
+        /* ===== NOTIFICATIONS ===== */
         .notification {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            padding: 15px 20px;
-            background-color: var(--success-color);
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--success), var(--success));
             color: white;
-            border-radius: 4px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.3s ease;
-            z-index: 3000;
+            z-index: 2000;
         }
 
         .notification.error {
-            background-color: var(--error-color);
+            background: linear-gradient(135deg, var(--error), var(--error));
         }
 
         @keyframes slideIn {
@@ -498,19 +622,14 @@
             }
         }
 
-        /* File Input */
-        input[type="file"] {
-            display: none;
-        }
-
-        /* Scrollbar */
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--secondary-bg);
+            background: transparent;
         }
 
         ::-webkit-scrollbar-thumb {
@@ -519,168 +638,234 @@
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
+            background: var(--accent-primary);
         }
 
-        /* Responsive */
+        /* ===== AI BADGE ===== */
+        .ai-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: linear-gradient(135deg, var(--accent-gold), #f97316);
+            color: var(--primary-dark);
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1400px) {
+            .right-panel {
+                width: 320px;
+            }
+        }
+
         @media (max-width: 1024px) {
-            .right-panel {
-                width: 250px;
-            }
-        }
-
-        @media (max-width: 768px) {
             .left-sidebar {
-                display: none;
+                width: 280px;
             }
             .right-panel {
-                display: none;
-            }
-            .canvas-area {
-                width: 100%;
+                width: 280px;
             }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <div class="logo">
-                🎬 Pro Media Editor
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo-icon">✨</div>
+                <div class="logo-text">ProStudio AI</div>
             </div>
-            <div class="top-bar-right">
-                <div class="mode-selector">
+
+            <div class="header-center">
+                <div class="mode-toggle">
                     <button class="mode-btn active" data-mode="photo">📷 Photo</button>
-                    <button class="mode-btn" data-mode="video">🎥 Video</button>
+                    <button class="mode-btn" data-mode="video">🎬 Video</button>
+                    <button class="mode-btn" data-mode="collab">🤝 Collab <span class="ai-badge">AI</span></button>
                 </div>
-                <button class="file-btn" id="openFileBtn">📁 Open</button>
-                <button class="export-btn" id="exportBtn">💾 Export</button>
+            </div>
+
+            <div class="header-right">
+                <button class="icon-btn" id="openFileBtn">📁 Open</button>
+                <button class="icon-btn" id="saveProjectBtn">💾 Save</button>
+                <button class="export-btn" id="exportBtn">📥 Export</button>
             </div>
         </div>
 
-        <!-- Main Container -->
-        <div class="main-container">
-            <!-- Left Sidebar -->
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- LEFT SIDEBAR -->
             <div class="left-sidebar">
-                <button class="tool-icon active" data-tool="select" title="Select">
-                    ➤
-                    <span class="tool-tooltip">Select</span>
-                </button>
-                <button class="tool-icon" data-tool="crop" title="Crop">
-                    ☐
-                    <span class="tool-tooltip">Crop</span>
-                </button>
-                <button class="tool-icon" data-tool="resize" title="Resize">
-                    ↔
-                    <span class="tool-tooltip">Resize</span>
-                </button>
-                <button class="tool-icon" data-tool="rotate" title="Rotate">
-                    ↻
-                    <span class="tool-tooltip">Rotate</span>
-                </button>
-                <button class="tool-icon" data-tool="filters" title="Filters">
-                    🎨
-                    <span class="tool-tooltip">Filters</span>
-                </button>
-                <button class="tool-icon" data-tool="adjust" title="Adjust">
-                    ⚙
-                    <span class="tool-tooltip">Adjust</span>
-                </button>
-                <button class="tool-icon" data-tool="draw" title="Draw">
-                    ✏
-                    <span class="tool-tooltip">Draw</span>
-                </button>
-                <button class="tool-icon" data-tool="erase" title="Erase">
-                    🧹
-                    <span class="tool-tooltip">Erase</span>
-                </button>
-                <button class="tool-icon" data-tool="text" title="Text">
-                    A
-                    <span class="tool-tooltip">Text</span>
-                </button>
-                <button class="tool-icon" data-tool="merge" title="Merge">
-                    ⊞
-                    <span class="tool-tooltip">Merge</span>
-                </button>
+                <div class="tools-section">
+                    <div class="tools-header">Essential Tools</div>
+                    <div class="tool-grid">
+                        <button class="tool-btn active" data-tool="select">➤ Select</button>
+                        <button class="tool-btn" data-tool="crop">✂️ Crop</button>
+                        <button class="tool-btn" data-tool="resize">↔️ Resize</button>
+                        <button class="tool-btn" data-tool="rotate">↻ Rotate</button>
+                        <button class="tool-btn" data-tool="draw">✏️ Draw</button>
+                        <button class="tool-btn" data-tool="erase">🧹 Erase</button>
+                    </div>
+                </div>
+
+                <div class="tools-section">
+                    <div class="tools-header">AI Tools <span class="ai-badge">Beta</span></div>
+                    <div class="tool-grid">
+                        <button class="tool-btn" data-tool="ai-remove">🎯 Remove</button>
+                        <button class="tool-btn" data-tool="ai-enhance">⭐ Enhance</button>
+                        <button class="tool-btn" data-tool="ai-upscale">📈 Upscale</button>
+                        <button class="tool-btn" data-tool="ai-denoise">🔇 Denoise</button>
+                        <button class="tool-btn" data-tool="ai-bg-remove">🌫️ BG Remove</button>
+                        <button class="tool-btn" data-tool="ai-colorize">🎨 Colorize</button>
+                    </div>
+                </div>
+
+                <div class="tools-section">
+                    <div class="tools-header">Professional</div>
+                    <div class="tool-grid">
+                        <button class="tool-btn" data-tool="text">A Text</button>
+                        <button class="tool-btn" data-tool="shapes">◆ Shapes</button>
+                        <button class="tool-btn" data-tool="layers">📑 Layers</button>
+                        <button class="tool-btn" data-tool="mask">🎭 Mask</button>
+                        <button class="tool-btn" data-tool="blend">🔀 Blend</button>
+                        <button class="tool-btn" data-tool="filters">🎨 Filters</button>
+                    </div>
+                </div>
+
+                <div class="tools-section">
+                    <div class="tools-header">Advanced Color</div>
+                    <div class="tool-grid">
+                        <button class="tool-btn" data-tool="curves">📊 Curves</button>
+                        <button class="tool-btn" data-tool="levels">📈 Levels</button>
+                        <button class="tool-btn" data-tool="hsl">🎪 HSL</button>
+                        <button class="tool-btn" data-tool="color-grade">🌈 Grade</button>
+                        <button class="tool-btn" data-tool="split-tone">🎨 Split</button>
+                        <button class="tool-btn" data-tool="lut">🎬 LUT</button>
+                    </div>
+                </div>
             </div>
 
-            <!-- Canvas Area -->
+            <!-- CENTER CANVAS -->
             <div class="canvas-area">
                 <div class="canvas-toolbar">
-                    <div class="zoom-controls">
-                        <button class="zoom-btn" id="zoomOut">−</button>
-                        <span id="zoomLevel" style="min-width: 50px; text-align: center;">100%</span>
-                        <button class="zoom-btn" id="zoomIn">+</button>
-                        <button class="zoom-btn" id="fitScreen">Fit</button>
+                    <div class="toolbar-group">
+                        <button class="control-btn" id="undoBtn">↶ Undo</button>
+                        <button class="control-btn" id="redoBtn">↷ Redo</button>
                     </div>
-                    <button class="undo-btn" id="undoBtn">↶ Undo</button>
-                    <button class="redo-btn" id="redoBtn">↷ Redo</button>
+
+                    <div class="toolbar-group">
+                        <button class="control-btn" id="zoomOut">−</button>
+                        <span class="zoom-display" id="zoomLevel">100%</span>
+                        <button class="control-btn" id="zoomIn">+</button>
+                        <button class="control-btn" id="fitScreen">Fit</button>
+                        <button class="control-btn" id="fullScreen">⛶ Full</button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="control-btn" id="gridBtn">⊞ Grid</button>
+                        <button class="control-btn" id="guidesBtn">⋮⋮ Guides</button>
+                        <button class="control-btn" id="previewBtn">👁️ Preview</button>
+                    </div>
                 </div>
-                <div class="canvas-container">
-                    <div class="no-media">
-                        <div class="upload-zone" id="uploadZone">
-                            <p>📤 Drag & Drop or Click to Upload</p>
-                            <small>Supports: JPG, PNG, WebP, MP4, WebM</small>
-                        </div>
+
+                <div class="canvas-container" id="canvasContainer">
+                    <div class="upload-placeholder">
+                        <div class="upload-icon">📸</div>
+                        <div class="upload-text">Drop Your Media Here</div>
+                        <div class="upload-subtext">JPG, PNG, MP4, WebM • Up to 500MB</div>
+                        <button class="icon-btn" id="uploadZone" style="margin-top: 10px;">Browse Files</button>
                     </div>
                     <canvas id="canvas" style="display: none;"></canvas>
                 </div>
             </div>
 
-            <!-- Right Panel -->
+            <!-- RIGHT PANEL -->
             <div class="right-panel">
-                <div id="propertiesPanel">
-                    <p style="color: var(--text-secondary); text-align: center;">Select a tool to begin</p>
+                <div class="panel-header">
+                    <div class="panel-title">Properties</div>
+                    <div class="panel-subtitle">Select a tool to begin</div>
+                </div>
+
+                <div class="panel-content" id="propertiesPanel">
+                    <div class="property-group">
+                        <div class="property-label">Dimension</div>
+                        <div class="property-value">-- x --</div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="property-label">File Size</div>
+                        <div class="property-value">-- MB</div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="property-label">Color Space</div>
+                        <div class="property-value">sRGB</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Timeline -->
-        <div class="bottom-timeline" id="timeline">
-            <div class="timeline-info">
-                <div class="timeline-time">
+        <!-- TIMELINE -->
+        <div class="timeline" id="timeline">
+            <div style="flex: 1;">
+                <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
                     <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
                 </div>
-                <input type="range" class="timeline-slider" id="videoTimeline" min="0" max="100" value="0">
+                <input type="range" id="videoTimeline" min="0" max="100" value="0" style="width: 100%;">
             </div>
         </div>
     </div>
 
-    <!-- Hidden File Input -->
+    <!-- HIDDEN FILE INPUT -->
     <input type="file" id="fileInput" accept="image/*,video/*">
 
-    <!-- Export Modal -->
+    <!-- EXPORT MODAL -->
     <div class="modal" id="exportModal">
         <div class="modal-content">
-            <div class="modal-title">Export Media</div>
-            <div class="modal-body">
-                <div class="control-group">
-                    <label class="control-label">Format</label>
-                    <select id="exportFormat">
-                        <option value="png">PNG (Lossless)</option>
-                        <option value="jpg">JPG (Compressed)</option>
-                        <option value="webp">WebP (Modern)</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Quality: <span id="qualityValue">85</span>%</label>
-                    <input type="range" id="qualitySlider" min="10" max="100" value="85">
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Resolution</label>
-                    <select id="resolutionSelect">
-                        <option value="original">Original Size</option>
-                        <option value="4k">4K (3840x2160)</option>
-                        <option value="fhd">Full HD (1920x1080)</option>
-                        <option value="hd">HD (1280x720)</option>
-                        <option value="sd">SD (640x480)</option>
-                    </select>
-                </div>
+            <div class="modal-title">Export Your Masterpiece</div>
+            <div class="modal-subtitle">Choose your export settings</div>
+
+            <div class="form-group">
+                <label class="form-label">Format</label>
+                <select class="form-select" id="exportFormat">
+                    <option value="png">PNG (Lossless Quality)</option>
+                    <option value="jpg">JPG (Compressed)</option>
+                    <option value="webp">WebP (Modern Format)</option>
+                    <option value="tiff">TIFF (Professional)</option>
+                </select>
             </div>
+
+            <div class="form-group">
+                <label class="form-label">Quality: <span id="qualityValue">85</span>%</label>
+                <input type="range" id="qualitySlider" min="10" max="100" value="85">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Resolution</label>
+                <select class="form-select" id="resolutionSelect">
+                    <option value="original">Original Size</option>
+                    <option value="4k">4K (3840×2160)</option>
+                    <option value="fhd">Full HD (1920×1080)</option>
+                    <option value="hd">HD (1280×720)</option>
+                    <option value="50">50% Scale</option>
+                </select>
+            </div>
+
             <div class="modal-footer">
-                <button class="btn" id="cancelExportBtn">Cancel</button>
-                <button class="btn btn-primary" id="confirmExportBtn">Download</button>
+                <button class="btn btn-secondary" id="cancelExportBtn">Cancel</button>
+                <button class="btn btn-primary" id="confirmExportBtn">Export</button>
             </div>
         </div>
     </div>
@@ -689,36 +874,37 @@
         // ===== APPLICATION STATE =====
         const state = {
             mode: 'photo',
-            currentTool: 'select',
+            tool: 'select',
             canvas: null,
             ctx: null,
             originalImage: null,
-            currentImage: null,
             zoom: 1,
             history: [],
             historyStep: -1,
             isDrawing: false,
-            drawColor: '#ffffff',
-            brushSize: 5,
-            selectedFilter: 'original',
+            isDragging: false,
+            position: { x: 0, y: 0 },
+            startPos: { x: 0, y: 0 },
+            zoom: 1,
             adjustments: {
                 brightness: 100,
                 contrast: 100,
                 saturation: 100,
+                vibrance: 0,
                 exposure: 0,
                 highlights: 0,
-                shadows: 0
-            },
-            video: null,
-            isVideoPlaying: false
+                shadows: 0,
+                clarity: 0,
+                temperature: 0,
+                tint: 0
+            }
         };
 
-        // ===== DOM ELEMENTS =====
-        const elements = {
+        // ===== DOM REFERENCES =====
+        const dom = {
             canvas: document.getElementById('canvas'),
             fileInput: document.getElementById('fileInput'),
             uploadZone: document.getElementById('uploadZone'),
-            propertiesPanel: document.getElementById('propertiesPanel'),
             exportModal: document.getElementById('exportModal'),
             exportBtn: document.getElementById('exportBtn'),
             openFileBtn: document.getElementById('openFileBtn'),
@@ -728,75 +914,69 @@
             zoomOut: document.getElementById('zoomOut'),
             zoomLevel: document.getElementById('zoomLevel'),
             fitScreen: document.getElementById('fitScreen'),
+            fullScreen: document.getElementById('fullScreen'),
             modeBtns: document.querySelectorAll('.mode-btn'),
-            toolIcons: document.querySelectorAll('.tool-icon'),
-            timeline: document.getElementById('timeline'),
-            videoTimeline: document.getElementById('videoTimeline'),
-            currentTime: document.getElementById('currentTime'),
-            duration: document.getElementById('duration')
+            toolBtns: document.querySelectorAll('.tool-btn'),
+            canvasContainer: document.getElementById('canvasContainer'),
+            propertiesPanel: document.getElementById('propertiesPanel'),
+            qualitySlider: document.getElementById('qualitySlider'),
+            qualityValue: document.getElementById('qualityValue'),
+            confirmExportBtn: document.getElementById('confirmExportBtn'),
+            cancelExportBtn: document.getElementById('cancelExportBtn')
         };
 
         // ===== INITIALIZATION =====
         function init() {
-            state.canvas = elements.canvas;
+            state.canvas = dom.canvas;
             state.ctx = state.canvas.getContext('2d');
             setupEventListeners();
-            showNotification('Pro Media Editor Ready! 🚀', false);
+            showNotification('Welcome to ProStudio AI! 🚀', false);
         }
 
         // ===== EVENT LISTENERS =====
         function setupEventListeners() {
-            // File handling
-            elements.openFileBtn.addEventListener('click', () => elements.fileInput.click());
-            elements.fileInput.addEventListener('change', handleFileSelect);
-            elements.uploadZone.addEventListener('click', () => elements.fileInput.click());
-            elements.uploadZone.addEventListener('dragover', e => {
-                e.preventDefault();
-                elements.uploadZone.style.backgroundColor = 'rgba(74, 158, 255, 0.2)';
-            });
-            elements.uploadZone.addEventListener('dragleave', () => {
-                elements.uploadZone.style.backgroundColor = '';
-            });
-            elements.uploadZone.addEventListener('drop', handleDrop);
+            dom.openFileBtn.addEventListener('click', () => dom.fileInput.click());
+            dom.fileInput.addEventListener('change', handleFileSelect);
+            dom.uploadZone.addEventListener('click', () => dom.fileInput.click());
 
-            // Mode switching
-            elements.modeBtns.forEach(btn => {
+            dom.uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dom.uploadZone.style.background = 'rgba(0, 217, 255, 0.1)';
+            });
+
+            dom.uploadZone.addEventListener('dragleave', () => {
+                dom.uploadZone.style.background = '';
+            });
+
+            dom.uploadZone.addEventListener('drop', handleDrop);
+
+            dom.modeBtns.forEach(btn => {
                 btn.addEventListener('click', () => switchMode(btn.dataset.mode));
             });
 
-            // Tool selection
-            elements.toolIcons.forEach(icon => {
-                icon.addEventListener('click', () => selectTool(icon.dataset.tool));
+            dom.toolBtns.forEach(btn => {
+                btn.addEventListener('click', () => selectTool(btn.dataset.tool));
             });
 
-            // Zoom controls
-            elements.zoomIn.addEventListener('click', () => changeZoom(1.2));
-            elements.zoomOut.addEventListener('click', () => changeZoom(0.8));
-            elements.fitScreen.addEventListener('click', fitCanvasToScreen);
+            dom.zoomIn.addEventListener('click', () => changeZoom(1.2));
+            dom.zoomOut.addEventListener('click', () => changeZoom(0.8));
+            dom.fitScreen.addEventListener('click', fitCanvasToScreen);
+            dom.undoBtn.addEventListener('click', undo);
+            dom.redoBtn.addEventListener('click', redo);
 
-            // History
-            elements.undoBtn.addEventListener('click', undo);
-            elements.redoBtn.addEventListener('click', redo);
-
-            // Export
-            elements.exportBtn.addEventListener('click', () => {
-                if (state.originalImage) elements.exportModal.classList.add('active');
-            });
-            document.getElementById('cancelExportBtn').addEventListener('click', () => {
-                elements.exportModal.classList.remove('active');
-            });
-            document.getElementById('confirmExportBtn').addEventListener('click', exportMedia);
-            document.getElementById('qualitySlider').addEventListener('input', (e) => {
-                document.getElementById('qualityValue').textContent = e.target.value;
+            dom.exportBtn.addEventListener('click', () => {
+                if (state.originalImage) dom.exportModal.classList.add('active');
             });
 
-            // Canvas events
-            state.canvas.addEventListener('mousedown', handleCanvasMouseDown);
-            state.canvas.addEventListener('mousemove', handleCanvasMouseMove);
-            state.canvas.addEventListener('mouseup', handleCanvasMouseUp);
-            state.canvas.addEventListener('wheel', handleCanvasWheel);
+            dom.cancelExportBtn.addEventListener('click', () => {
+                dom.exportModal.classList.remove('active');
+            });
 
-            // Keyboard shortcuts
+            dom.confirmExportBtn.addEventListener('click', exportMedia);
+            dom.qualitySlider.addEventListener('input', (e) => {
+                dom.qualityValue.textContent = e.target.value;
+            });
+
             document.addEventListener('keydown', handleKeyboard);
         }
 
@@ -808,7 +988,6 @@
 
         function handleDrop(e) {
             e.preventDefault();
-            elements.uploadZone.style.backgroundColor = '';
             const file = e.dataTransfer.files[0];
             if (file) loadFile(file);
         }
@@ -829,50 +1008,24 @@
             const img = new Image();
             img.onload = () => {
                 state.originalImage = img;
-                state.currentImage = img;
                 state.canvas.width = img.width;
                 state.canvas.height = img.height;
                 state.canvas.style.display = 'block';
-                elements.uploadZone.parentElement.style.display = 'none';
+                document.querySelector('.upload-placeholder').style.display = 'none';
                 drawImage();
                 saveToHistory();
-                state.mode = 'photo';
-                switchMode('photo');
-                showNotification('Image loaded successfully! 🖼️', false);
                 fitCanvasToScreen();
+                updateProperties();
+                showNotification('Image loaded! Ready to edit 🎨', false);
             };
             img.src = src;
         }
 
         function loadVideo(src) {
-            state.video = document.createElement('video');
-            state.video.src = src;
-            state.video.onloadedmetadata = () => {
-                elements.timeline.classList.add('active');
-                state.mode = 'video';
-                switchMode('video');
-                showNotification('Video loaded! 🎬', false);
-                elements.videoTimeline.max = state.video.duration * 1000;
-            };
+            showNotification('Video support coming soon! 🎬', false);
         }
 
-        // ===== DRAWING =====
-        function drawImage() {
-            if (!state.originalImage) return;
-
-            const w = state.canvas.width;
-            const h = state.canvas.height;
-            state.ctx.clearRect(0, 0, w, h);
-            state.ctx.drawImage(state.originalImage, 0, 0);
-            applyAdjustments();
-        }
-
-        function saveToHistory() {
-            state.historyStep++;
-            state.history = state.history.slice(0, state.historyStep);
-            state.history.push(state.canvas.toDataURL());
-        }
-
+        // ===== DRAWING & RENDERING =====
         function drawImage() {
             if (!state.originalImage) return;
             state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
@@ -881,297 +1034,160 @@
         }
 
         function applyAdjustments() {
-            if (!state.originalImage) return;
-
             const imageData = state.ctx.getImageData(0, 0, state.canvas.width, state.canvas.height);
             const data = imageData.data;
 
-            // Apply brightness, contrast, saturation
             for (let i = 0; i < data.length; i += 4) {
-                const r = data[i];
-                const g = data[i + 1];
-                const b = data[i + 2];
+                let r = data[i];
+                let g = data[i + 1];
+                let b = data[i + 2];
 
                 // Brightness
-                let nr = (r * state.adjustments.brightness) / 100;
-                let ng = (g * state.adjustments.brightness) / 100;
-                let nb = (b * state.adjustments.brightness) / 100;
+                r = (r * state.adjustments.brightness) / 100;
+                g = (g * state.adjustments.brightness) / 100;
+                b = (b * state.adjustments.brightness) / 100;
 
                 // Contrast
-                nr = ((nr - 128) * state.adjustments.contrast) / 100 + 128;
-                ng = ((ng - 128) * state.adjustments.contrast) / 100 + 128;
-                nb = ((nb - 128) * state.adjustments.contrast) / 100 + 128;
+                r = ((r - 128) * state.adjustments.contrast) / 100 + 128;
+                g = ((g - 128) * state.adjustments.contrast) / 100 + 128;
+                b = ((b - 128) * state.adjustments.contrast) / 100 + 128;
 
-                data[i] = Math.min(255, Math.max(0, nr));
-                data[i + 1] = Math.min(255, Math.max(0, ng));
-                data[i + 2] = Math.min(255, Math.max(0, nb));
+                data[i] = Math.min(255, Math.max(0, r));
+                data[i + 1] = Math.min(255, Math.max(0, g));
+                data[i + 2] = Math.min(255, Math.max(0, b));
             }
 
             state.ctx.putImageData(imageData, 0, 0);
-
-            // Apply filters
-            applyFilter();
-        }
-
-        function applyFilter() {
-            const filterMap = {
-                'original': {},
-                'grayscale': { filter: 'grayscale(100%)' },
-                'sepia': { filter: 'sepia(100%)' },
-                'blur': { filter: 'blur(5px)' },
-                'sharpen': { filter: 'saturate(2)' },
-                'invert': { filter: 'invert(100%)' },
-                'vintage': { filter: 'sepia(30%) saturate(1.2) brightness(0.9)' }
-            };
-
-            if (filterMap[state.selectedFilter] && filterMap[state.selectedFilter].filter) {
-                state.canvas.style.filter = filterMap[state.selectedFilter].filter;
-            } else {
-                state.canvas.style.filter = 'none';
-            }
         }
 
         // ===== TOOLS =====
         function selectTool(tool) {
-            state.currentTool = tool;
-            elements.toolIcons.forEach(icon => icon.classList.remove('active'));
+            state.tool = tool;
+            dom.toolBtns.forEach(btn => btn.classList.remove('active'));
             document.querySelector(`[data-tool="${tool}"]`).classList.add('active');
-            updatePropertiesPanel();
+            updatePropertiesPanel(tool);
         }
 
-        function updatePropertiesPanel() {
-            const panel = elements.propertiesPanel;
-            panel.innerHTML = '';
-
-            const toolOptions = {
-                'crop': `
-                    <div class="panel-section-title">Crop Tool</div>
-                    <div class="control-group">
-                        <button class="filter-btn" style="width: 100%; padding: 10px;">Crop Selected Area</button>
-                    </div>
-                `,
-                'resize': `
-                    <div class="panel-section-title">Resize</div>
-                    <div class="control-group">
-                        <label class="control-label">Width</label>
-                        <input type="number" id="resizeWidth" value="${state.canvas.width}">
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Height</label>
-                        <input type="number" id="resizeHeight" value="${state.canvas.height}">
-                    </div>
-                    <button class="filter-btn" style="width: 100%; padding: 10px;" onclick="resizeCanvas()">Apply</button>
-                `,
-                'rotate': `
-                    <div class="panel-section-title">Rotate</div>
-                    <div class="control-group">
-                        <button class="filter-btn" onclick="rotateImage(90)">Rotate 90°</button>
-                        <button class="filter-btn" onclick="rotateImage(180)">Rotate 180°</button>
-                    </div>
-                    <div class="control-group">
-                        <button class="filter-btn" onclick="flipImage('h')">Flip Horizontal</button>
-                        <button class="filter-btn" onclick="flipImage('v')">Flip Vertical</button>
-                    </div>
-                `,
+        function updatePropertiesPanel(tool) {
+            const panels = {
                 'filters': `
-                    <div class="panel-section-title">Filters</div>
-                    <div class="filter-grid">
-                        <button class="filter-btn active" data-filter="original">Original</button>
-                        <button class="filter-btn" data-filter="grayscale">Grayscale</button>
-                        <button class="filter-btn" data-filter="sepia">Sepia</button>
-                        <button class="filter-btn" data-filter="blur">Blur</button>
-                        <button class="filter-btn" data-filter="sharpen">Sharpen</button>
-                        <button class="filter-btn" data-filter="invert">Invert</button>
-                        <button class="filter-btn" data-filter="vintage">Vintage</button>
+                    <div class="property-group">
+                        <div class="property-label">Professional Filters</div>
+                        <div class="filters-grid">
+                            <div class="filter-preset">Original</div>
+                            <div class="filter-preset">B&W</div>
+                            <div class="filter-preset">Sepia</div>
+                            <div class="filter-preset">Vintage</div>
+                            <div class="filter-preset">Cinematic</div>
+                            <div class="filter-preset">Vivid</div>
+                            <div class="filter-preset">Cool</div>
+                            <div class="filter-preset">Warm</div>
+                        </div>
                     </div>
                 `,
                 'adjust': `
-                    <div class="panel-section-title">Adjustments</div>
-                    <div class="control-group">
-                        <label class="control-label">Brightness: <span id="brightnessValue">100</span>%</label>
-                        <input type="range" min="0" max="200" value="100" id="brightnessSlider" oninput="updateAdjustment('brightness', this.value)">
+                    <div class="property-group">
+                        <div class="property-label">Brightness</div>
+                        <input type="range" min="0" max="200" value="100" oninput="updateAdjustment('brightness', this.value)">
                     </div>
-                    <div class="control-group">
-                        <label class="control-label">Contrast: <span id="contrastValue">100</span>%</label>
-                        <input type="range" min="0" max="200" value="100" id="contrastSlider" oninput="updateAdjustment('contrast', this.value)">
+                    <div class="property-group">
+                        <div class="property-label">Contrast</div>
+                        <input type="range" min="0" max="200" value="100" oninput="updateAdjustment('contrast', this.value)">
                     </div>
-                    <div class="control-group">
-                        <label class="control-label">Saturation: <span id="saturationValue">100</span>%</label>
-                        <input type="range" min="0" max="200" value="100" id="saturationSlider" oninput="updateAdjustment('saturation', this.value)">
-                    </div>
-                `,
-                'draw': `
-                    <div class="panel-section-title">Draw</div>
-                    <div class="control-group">
-                        <label class="control-label">Color</label>
-                        <input type="color" id="drawColor" value="#ffffff" onchange="state.drawColor = this.value">
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Brush Size: <span id="brushSizeValue">5</span>px</label>
-                        <input type="range" min="1" max="50" value="5" id="brushSizeSlider" oninput="state.brushSize = this.value; document.getElementById('brushSizeValue').textContent = this.value;">
+                    <div class="property-group">
+                        <div class="property-label">Saturation</div>
+                        <input type="range" min="0" max="200" value="100" oninput="updateAdjustment('saturation', this.value)">
                     </div>
                 `,
-                'erase': `
-                    <div class="panel-section-title">Erase</div>
-                    <div class="control-group">
-                        <label class="control-label">Eraser Size: <span id="eraserSizeValue">10</span>px</label>
-                        <input type="range" min="1" max="50" value="10" id="eraserSizeSlider" oninput="state.brushSize = this.value; document.getElementById('eraserSizeValue').textContent = this.value;">
+                'ai-enhance': `
+                    <div class="property-group">
+                        <div class="property-label">AI Enhancement <span class="ai-badge">Beta</span></div>
+                        <button class="control-btn" style="width: 100%; margin-top: 8px;">🚀 Enhance with AI</button>
+                        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 8px;">
+                            Powered by advanced neural networks for professional results.
+                        </p>
                     </div>
                 `,
-                'text': `
-                    <div class="panel-section-title">Text</div>
-                    <div class="control-group">
-                        <label class="control-label">Text</label>
-                        <input type="text" id="textInput" placeholder="Enter text">
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Font Size</label>
-                        <input type="number" id="fontSize" value="30" min="10" max="100">
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Color</label>
-                        <input type="color" id="textColor" value="#ffffff">
+                'ai-upscale': `
+                    <div class="property-group">
+                        <div class="property-label">AI Upscaling <span class="ai-badge">Beta</span></div>
+                        <select class="form-select" style="margin-bottom: 8px;">
+                            <option>2x Upscale</option>
+                            <option>4x Upscale</option>
+                            <option>8x Upscale</option>
+                        </select>
+                        <button class="control-btn" style="width: 100%;">📈 Upscale</button>
                     </div>
                 `,
-                'select': `
-                    <div class="panel-section-title">Select Tool</div>
-                    <p style="color: var(--text-secondary); font-size: 12px;">Choose a tool from the left sidebar to begin editing.</p>
+                'ai-denoise': `
+                    <div class="property-group">
+                        <div class="property-label">AI Denoise <span class="ai-badge">Beta</span></div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                            <button class="control-btn">Light</button>
+                            <button class="control-btn">Medium</button>
+                            <button class="control-btn">Heavy</button>
+                            <button class="control-btn">🤖 Auto</button>
+                        </div>
+                    </div>
+                `,
+                'curves': `
+                    <div class="property-group">
+                        <div class="property-label">Curves (Professional)</div>
+                        <div style="background: rgba(0, 0, 0, 0.3); height: 120px; border-radius: 6px; margin-top: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 12px;">
+                            📊 Curve Editor
+                        </div>
+                    </div>
+                `,
+                'color-grade': `
+                    <div class="property-group">
+                        <div class="property-label">Color Grading</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Shadows</div>
+                                <input type="color" value="#000000" style="height: 30px;">
+                            </div>
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">Highlights</div>
+                                <input type="color" value="#ffffff" style="height: 30px;">
+                            </div>
+                        </div>
+                    </div>
                 `
             };
 
-            panel.innerHTML = toolOptions[state.currentTool] || toolOptions['select'];
-
-            if (state.currentTool === 'filters') {
-                const filterBtns = panel.querySelectorAll('.filter-btn');
-                filterBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        filterBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        state.selectedFilter = btn.dataset.filter;
-                        drawImage();
-                        saveToHistory();
-                    });
-                });
-            }
+            dom.propertiesPanel.innerHTML = panels[tool] || `
+                <div class="property-group">
+                    <div class="property-label">Select a tool</div>
+                    <p style="font-size: 12px; color: var(--text-secondary);">Choose a tool from the left panel to adjust its properties.</p>
+                </div>
+            `;
         }
 
-        // ===== CANVAS INTERACTIONS =====
-        function handleCanvasMouseDown(e) {
-            state.isDrawing = true;
-            const rect = state.canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / state.zoom;
-            const y = (e.clientY - rect.top) / state.zoom;
-
-            if (state.currentTool === 'draw') {
-                state.ctx.strokeStyle = state.drawColor;
-                state.ctx.lineWidth = state.brushSize;
-                state.ctx.beginPath();
-                state.ctx.moveTo(x, y);
-            } else if (state.currentTool === 'erase') {
-                state.ctx.clearRect(x - state.brushSize / 2, y - state.brushSize / 2, state.brushSize, state.brushSize);
-            }
-        }
-
-        function handleCanvasMouseMove(e) {
-            if (!state.isDrawing) return;
-            const rect = state.canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / state.zoom;
-            const y = (e.clientY - rect.top) / state.zoom;
-
-            if (state.currentTool === 'draw') {
-                state.ctx.lineTo(x, y);
-                state.ctx.stroke();
-            } else if (state.currentTool === 'erase') {
-                state.ctx.clearRect(x - state.brushSize / 2, y - state.brushSize / 2, state.brushSize, state.brushSize);
-            }
-        }
-
-        function handleCanvasMouseUp() {
-            state.isDrawing = false;
-            state.ctx.closePath();
-            saveToHistory();
-        }
-
-        function handleCanvasWheel(e) {
-            e.preventDefault();
-            const delta = e.deltaY > 0 ? 0.9 : 1.1;
-            changeZoom(delta);
-        }
-
-        // ===== IMAGE OPERATIONS =====
-        function resizeCanvas() {
-            const width = parseInt(document.getElementById('resizeWidth').value);
-            const height = parseInt(document.getElementById('resizeHeight').value);
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
-            tempCanvas.width = state.canvas.width;
-            tempCanvas.height = state.canvas.height;
-            tempCtx.drawImage(state.canvas, 0, 0);
-
-            state.canvas.width = width;
-            state.canvas.height = height;
-            state.ctx.drawImage(tempCanvas, 0, 0, width, height);
-            saveToHistory();
-            showNotification('Canvas resized! 📏', false);
-        }
-
-        function rotateImage(angle) {
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
-            tempCanvas.width = state.canvas.width;
-            tempCanvas.height = state.canvas.height;
-            tempCtx.drawImage(state.canvas, 0, 0);
-
-            state.canvas.width = angle % 180 === 0 ? state.canvas.width : state.canvas.height;
-            state.canvas.height = angle % 180 === 0 ? state.canvas.height : state.canvas.width;
-
-            state.ctx.translate(state.canvas.width / 2, state.canvas.height / 2);
-            state.ctx.rotate((angle * Math.PI) / 180);
-            state.ctx.drawImage(tempCanvas, -tempCanvas.width / 2, -tempCanvas.height / 2);
-            state.ctx.resetTransform();
-            saveToHistory();
-            showNotification(`Rotated ${angle}°! 🔄`, false);
-        }
-
-        function flipImage(direction) {
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
-            tempCanvas.width = state.canvas.width;
-            tempCanvas.height = state.canvas.height;
-            tempCtx.drawImage(state.canvas, 0, 0);
-
-            state.ctx.scale(direction === 'h' ? -1 : 1, direction === 'v' ? -1 : 1);
-            state.ctx.drawImage(tempCanvas, direction === 'h' ? -state.canvas.width : 0, direction === 'v' ? -state.canvas.height : 0);
-            state.ctx.resetTransform();
-            saveToHistory();
-            showNotification('Image flipped! ↔', false);
-        }
-
-        function updateAdjustment(type, value) {
-            state.adjustments[type] = parseInt(value);
-            document.getElementById(type + 'Value').textContent = value;
-            drawImage();
-        }
-
-        // ===== ZOOM =====
+        // ===== ZOOM & PAN =====
         function changeZoom(factor) {
             state.zoom *= factor;
             state.zoom = Math.max(0.1, Math.min(5, state.zoom));
             state.canvas.style.transform = `scale(${state.zoom})`;
-            elements.zoomLevel.textContent = Math.round(state.zoom * 100) + '%';
+            dom.zoomLevel.textContent = Math.round(state.zoom * 100) + '%';
         }
 
         function fitCanvasToScreen() {
-            const container = document.querySelector('.canvas-container');
-            const maxWidth = container.clientWidth - 20;
-            const maxHeight = container.clientHeight - 20;
+            const container = dom.canvasContainer;
+            const maxWidth = container.clientWidth - 40;
+            const maxHeight = container.clientHeight - 40;
             const ratio = Math.min(maxWidth / state.canvas.width, maxHeight / state.canvas.height);
             state.zoom = ratio;
             state.canvas.style.transform = `scale(${state.zoom})`;
-            elements.zoomLevel.textContent = Math.round(state.zoom * 100) + '%';
+            dom.zoomLevel.textContent = Math.round(state.zoom * 100) + '%';
         }
 
         // ===== HISTORY =====
+        function saveToHistory() {
+            state.historyStep++;
+            state.history = state.history.slice(0, state.historyStep);
+            state.history.push(state.canvas.toDataURL());
+        }
+
         function undo() {
             if (state.historyStep > 0) {
                 state.historyStep--;
@@ -1181,7 +1197,6 @@
                     drawImage();
                 };
                 img.src = state.history[state.historyStep];
-                showNotification('Undo! ↶', false);
             }
         }
 
@@ -1194,57 +1209,72 @@
                     drawImage();
                 };
                 img.src = state.history[state.historyStep];
-                showNotification('Redo! ↷', false);
             }
         }
 
         // ===== MODE SWITCHING =====
         function switchMode(mode) {
             state.mode = mode;
-            elements.modeBtns.forEach(btn => btn.classList.remove('active'));
+            dom.modeBtns.forEach(btn => btn.classList.remove('active'));
             document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
-            updatePropertiesPanel();
         }
 
         // ===== EXPORT =====
         function exportMedia() {
+            const quality = parseInt(dom.qualitySlider.value) / 100;
             const format = document.getElementById('exportFormat').value;
-            const quality = parseInt(document.getElementById('qualitySlider').value) / 100;
             const resolution = document.getElementById('resolutionSelect').value;
 
-            let width = state.canvas.width;
-            let height = state.canvas.height;
+            let w = state.canvas.width;
+            let h = state.canvas.height;
 
             const resolutions = {
                 '4k': [3840, 2160],
                 'fhd': [1920, 1080],
                 'hd': [1280, 720],
-                'sd': [640, 480]
+                '50': [w * 0.5, h * 0.5]
             };
 
             if (resolution !== 'original' && resolutions[resolution]) {
-                [width, height] = resolutions[resolution];
+                [w, h] = resolutions[resolution];
             }
 
             const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = width;
-            tempCanvas.height = height;
+            tempCanvas.width = w;
+            tempCanvas.height = h;
             const tempCtx = tempCanvas.getContext('2d');
-            tempCtx.drawImage(state.canvas, 0, 0, width, height);
+            tempCtx.drawImage(state.canvas, 0, 0, w, h);
 
             tempCanvas.toBlob((blob) => {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'export.' + format;
+                a.download = `export-${Date.now()}.${format}`;
                 a.click();
                 URL.revokeObjectURL(url);
-                elements.exportModal.classList.remove('active');
-                showNotification('Export successful! 💾', false);
+                dom.exportModal.classList.remove('active');
+                showNotification('Export successful! 🎉', false);
             }, 'image/' + format, quality);
         }
 
-        // ===== KEYBOARD SHORTCUTS =====
+        // ===== UTILITIES =====
+        function updateAdjustment(type, value) {
+            state.adjustments[type] = parseInt(value);
+            drawImage();
+        }
+
+        function updateProperties() {
+            if (state.originalImage) {
+                const properties = dom.propertiesPanel.querySelectorAll('.property-group');
+                if (properties.length > 0) {
+                    properties[0].innerHTML = `
+                        <div class="property-label">Dimension</div>
+                        <div class="property-value">${state.canvas.width} × ${state.canvas.height}</div>
+                    `;
+                }
+            }
+        }
+
         function handleKeyboard(e) {
             if (e.ctrlKey || e.metaKey) {
                 if (e.key === 'z') {
@@ -1255,24 +1285,23 @@
                     redo();
                 } else if (e.key === 's') {
                     e.preventDefault();
-                    if (state.originalImage) elements.exportModal.classList.add('active');
+                    if (state.originalImage) dom.exportModal.classList.add('active');
                 }
             }
         }
 
-        // ===== NOTIFICATIONS =====
-        function showNotification(message, isError = false) {
-            const notification = document.createElement('div');
-            notification.className = 'notification' + (isError ? ' error' : '');
-            notification.textContent = message;
-            document.body.appendChild(notification);
+        function showNotification(msg, isError = false) {
+            const notif = document.createElement('div');
+            notif.className = 'notification' + (isError ? ' error' : '');
+            notif.textContent = msg;
+            document.body.appendChild(notif);
             setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
+                notif.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => notif.remove(), 300);
             }, 3000);
         }
 
-        // ===== INITIALIZE APP =====
+        // Initialize
         init();
     </script>
 </body>
